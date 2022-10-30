@@ -11,12 +11,16 @@ for(i=0; i< (pixelPerSide**2); i++) {
 }
 
 let allPixels = document.querySelectorAll('.pixel');
+let checkState = 0;
 
-allPixels.forEach((pixel) => checkHover(pixel));
+window.addEventListener('mousedown', () => {allPixels.forEach((pixel) => checkHover(pixel))});
+
+
 
 function checkHover(pixel) {
 
-    pixel.addEventListener('mouseover', () => {pixel.style.backgroundColor = 'black';} )
-    console.log('it did it');
+    const addColor = () => {pixel.style.backgroundColor = 'black';};
+
+    pixel.addEventListener('mouseover', addColor)
 
 }
