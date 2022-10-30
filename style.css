@@ -1,0 +1,24 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: wheat;
+}
+
+.screen {
+    height: 800px;
+    width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+}
+
+.pixel {
+    flex:none;
+    padding: 0;
+    margin: 0;
+}
