@@ -6,14 +6,6 @@ let screenSize = document.querySelector('.screen').offsetWidth;
 
 createScreen();
 
-slider.oninput = () => {
-    pixelPerSide = slider.value;
-    document.querySelector('.options p').textContent = pixelPerSide;
-    slider.onmouseup = () => {
-        clearScreen(); createScreen(); allPixels = document.querySelectorAll('.pixel');
-    }
-}
-
 function createScreen() {
 
 
