@@ -33,7 +33,7 @@ body {
 }
 
 .resolution {
-    -webkit-appearance: slider-vertical;
+    -webkit-appearance: none;
     width: 8px;
     height: 80%;
     border-radius: 5px;
