@@ -10,8 +10,8 @@ body {
 }
 
 .screen {
-    height: 800px;
-    width: 800px;
+    height: 500px;
+    width: 500px;
     display: flex;
     flex-wrap: wrap;
     background-color: white;
