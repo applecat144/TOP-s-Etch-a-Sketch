@@ -1,10 +1,48 @@
 let screen = document.querySelector('.screen')
-    , slider = document.querySelector('.resolution')
-    , pixelPerSide = 16;
+    , pixelPerSide = 16
+    , checkMouseDown = 0;
 
 let screenSize = document.querySelector('.screen').offsetWidth;
 
 createScreen();
+createSlider();
+
+window.onmousedown = () => { checkMouseDown = 1; };
+window.onmouseup = () => { checkMouseDown = 0; };
+
+document.querySelectorAll('.slider-peg').forEach((peg) => {
+    peg.addEventListener('mouseover', (e) => {
+
+        if (checkMouseDown) {
+            let pegNumber = +e.target.classList["1"].substr(1);
+
+            for (i = 16; i <= pegNumber; i++) {
+                document.querySelector(`.slider-peg.x${i}`).style.backgroundColor = "green";
+            }
+
+            for (i = pegNumber + 1; i <= 24; i++) {
+
+                document.querySelector(`.slider-peg.x${i}`).removeAttribute('style');
+            }
+
+            pixelPerSide = pegNumber;
+
+            clearScreen();
+            createScreen();
+
+        }
+    });
+})
+
+function createSlider() {
+
+    for (i = 16; i <= 24; i++) {
+        let peg = document.createElement('div');
+        peg.classList.add('slider-peg');
+        peg.classList.add(`x${i}`);
+        document.querySelector('.options').appendChild(peg);
+    }
+}
 
 function createScreen() {
 
@@ -35,7 +73,7 @@ function clearScreen() {
 
 }
 
-
+/*
 
 let allPixels = document.querySelectorAll('.pixel');
 let checkState = 0;
@@ -57,5 +95,6 @@ function checkHover(pixel) {
             break;
     }
 
-} 
+}
 
+*/
