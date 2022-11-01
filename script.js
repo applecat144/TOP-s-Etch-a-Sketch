@@ -1,13 +1,15 @@
 let screen = document.querySelector('.screen')
+    , minResolution = 16
+    , maxResolution = 24
     , pixelPerSide = 16
     , checkMouseDown = 0;
 
 let screenSize = document.querySelector('.screen').offsetWidth;
 let allPixels = document.querySelectorAll('.pixel');
 let checkState = 0;
-let addColor = function (e) { 
-    if(checkMouseDown) {
-    this.style.backgroundColor = 'black';
+let addColor = function (e) {
+    if (checkMouseDown) {
+        this.style.backgroundColor = 'black';
     }
 }
 
@@ -15,7 +17,7 @@ let addColor = function (e) {
 createScreen();
 createSlider();
 
-
+allPixels.forEach((pixel) => pixel.addEventListener('mouseover', addColor));
 
 window.onmousedown = () => { checkMouseDown = 1; };
 window.onmouseup = () => { checkMouseDown = 0; };
@@ -25,15 +27,29 @@ document.querySelectorAll('.slider-peg').forEach((peg) => {
 
         if (checkMouseDown) {
             let pegNumber = +e.target.classList["1"].substr(1);
+            console.log('works');
 
-            for (i = 16; i <= pegNumber; i++) {
+            for (i = minResolution; i <= maxResolution; i++) {
+                let currentPeg = document.querySelector(`.slider-peg.x${i}`);
+
+                if (currentPeg.firstChild) {
+                    currentPeg.removeChild(currentPeg.firstChild);
+                }
+            }
+
+
+            for (i = minResolution; i <= pegNumber; i++) {
                 document.querySelector(`.slider-peg.x${i}`).style.backgroundColor = "green";
             }
 
-            for (i = pegNumber + 1; i <= 24; i++) {
+            for (i = pegNumber + 1; i <= maxResolution; i++) {
 
                 document.querySelector(`.slider-peg.x${i}`).removeAttribute('style');
             }
+
+            let cursor = document.createElement('div');
+            cursor.classList.add('slider-cursor');
+            document.querySelector(`.slider-peg.x${pegNumber}`).appendChild(cursor);
 
             pixelPerSide = pegNumber;
 
@@ -48,11 +64,17 @@ document.querySelectorAll('.slider-peg').forEach((peg) => {
 
 function createSlider() {
 
-    for (i = 16; i <= 24; i++) {
+    for (i = minResolution; i <= maxResolution; i++) {
         let peg = document.createElement('div');
         peg.classList.add('slider-peg');
         peg.classList.add(`x${i}`);
         document.querySelector('.options').appendChild(peg);
+
+        if (i === minResolution) {
+            let cursor = document.createElement('div');
+            cursor.classList.add('slider-cursor');
+            document.querySelector(`.slider-peg.x${i}`).appendChild(cursor);
+        }
     }
 }
 
@@ -72,8 +94,6 @@ function createScreen() {
 
     }
 
-    console.log('createScreen');
-
 }
 
 function clearScreen() {
@@ -82,12 +102,10 @@ function clearScreen() {
         screen.removeChild(screen.firstChild);
     }
 
-    console.log('clearScreen');
-
 }
 
 
-allPixels.forEach((pixel) => pixel.addEventListener('mouseover', addColor));
+
 
 
 

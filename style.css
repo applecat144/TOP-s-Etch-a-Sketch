@@ -43,5 +43,14 @@ body {
 .slider-peg {
     flex: 1;
     background-color: blue;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
 }
 
+.slider-cursor {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: white;
+}
