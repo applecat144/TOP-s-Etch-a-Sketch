@@ -32,7 +32,8 @@ body {
     align-items: center;
 }
 
-.options {
+.slider-view,
+.slider-engine {
     width: 25px;
     height: 500px;
     display: flex;
@@ -40,17 +41,28 @@ body {
     align-items: stretch;
 }
 
-.slider-peg {
+.slider-engine {
+    z-index: 1;
+    position: absolute;
+}
+
+.sliderview-peg {
     flex: 1;
     background-color: blue;
-    /* display: flex;
+    display: flex;
     align-items: center;
-    justify-content: center; */
+    justify-content: center;
+}
+
+.slider-peg {
+    flex: 1;
 }
 
 .slider-cursor {
-    width: 5px;
-    height: 5px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background-color: white;
+    position: absolute;
+    pointer-events: none;
 }

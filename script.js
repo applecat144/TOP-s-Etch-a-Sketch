@@ -1,8 +1,9 @@
 let screen = document.querySelector('.screen')
     , minResolution = 16
-    , maxResolution = 24
+    , maxResolution = 64
     , pixelPerSide = 16
-    , checkMouseDown = 0;
+    , checkMouseDown = 0
+    , screenSwapRequired = 0;
 
 let screenSize = document.querySelector('.screen').offsetWidth;
 let allPixels = document.querySelectorAll('.pixel');
@@ -20,17 +21,26 @@ createSlider();
 allPixels.forEach((pixel) => pixel.addEventListener('mouseover', addColor));
 
 window.onmousedown = () => { checkMouseDown = 1; };
-window.onmouseup = () => { checkMouseDown = 0; };
+window.onmouseup = () => {
+    checkMouseDown = 0;
+    if (screenSwapRequired) {
+        console.log("screenSwap"); clearScreen(); createScreen(); screenSwapRequired = 0;
+    }
+};
 
 document.querySelectorAll('.slider-peg').forEach((peg) => {
-    peg.addEventListener('mouseover', (e) => {
+    peg.addEventListener('mouseleave', (e) => {
 
         if (checkMouseDown) {
-            let pegNumber = +e.target.classList["1"].substr(1);
-            console.log('works');
+
+            let pegNumber = "";
+
+            
+            pegNumber = +e.target.classList["1"].substr(1);
+            
 
             for (i = minResolution; i <= maxResolution; i++) {
-                let currentPeg = document.querySelector(`.slider-peg.x${i}`);
+                let currentPeg = document.querySelector(`.sliderview-peg.x${i}`);
 
                 if (currentPeg.firstChild) {
                     currentPeg.removeChild(currentPeg.firstChild);
@@ -39,24 +49,23 @@ document.querySelectorAll('.slider-peg').forEach((peg) => {
 
 
             for (i = minResolution; i <= pegNumber; i++) {
-                document.querySelector(`.slider-peg.x${i}`).style.backgroundColor = "green";
+                document.querySelector(`.sliderview-peg.x${i}`).style.backgroundColor = "green";
             }
 
             for (i = pegNumber + 1; i <= maxResolution; i++) {
 
-                document.querySelector(`.slider-peg.x${i}`).removeAttribute('style');
+                document.querySelector(`.sliderview-peg.x${i}`).removeAttribute('style');
             }
 
             let cursor = document.createElement('div');
             cursor.classList.add('slider-cursor');
-            document.querySelector(`.slider-peg.x${pegNumber}`).appendChild(cursor);
+            document.querySelector(`.sliderview-peg.x${pegNumber}`).appendChild(cursor);
 
             pixelPerSide = pegNumber;
+            screenSwapRequired = 1;
 
-            clearScreen();
-            createScreen();
 
-            allPixels.forEach((pixel) => pixel.addEventListener('mouseover', addColor));
+
 
         }
     });
@@ -66,15 +75,23 @@ function createSlider() {
 
     for (i = minResolution; i <= maxResolution; i++) {
         let peg = document.createElement('div');
-        peg.classList.add('slider-peg');
+        peg.classList.add('sliderview-peg');
         peg.classList.add(`x${i}`);
-        document.querySelector('.options').appendChild(peg);
+        document.querySelector('.slider-view').appendChild(peg);
 
         if (i === minResolution) {
             let cursor = document.createElement('div');
             cursor.classList.add('slider-cursor');
-            document.querySelector(`.slider-peg.x${i}`).appendChild(cursor);
+            document.querySelector(`.sliderview-peg.x${i}`).appendChild(cursor);
         }
+    }
+
+    for (i = minResolution; i <= maxResolution; i++) {
+        let peg = document.createElement('div');
+        peg.classList.add('slider-peg');
+        peg.classList.add(`x${i}`);
+        document.querySelector('.slider-engine').appendChild(peg);
+
     }
 }
 
@@ -93,6 +110,8 @@ function createScreen() {
         allPixels = document.querySelectorAll('.pixel');
 
     }
+    console.log("I did create");
+    allPixels.forEach((pixel) => pixel.addEventListener('mouseover', addColor));
 
 }
 
@@ -101,6 +120,7 @@ function clearScreen() {
     while (screen.firstChild) {
         screen.removeChild(screen.firstChild);
     }
+    console.log("I did clear");
 
 }
 
