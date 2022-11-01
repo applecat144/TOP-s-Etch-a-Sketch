@@ -3,9 +3,19 @@ let screen = document.querySelector('.screen')
     , checkMouseDown = 0;
 
 let screenSize = document.querySelector('.screen').offsetWidth;
+let allPixels = document.querySelectorAll('.pixel');
+let checkState = 0;
+let addColor = function (e) { 
+    if(checkMouseDown) {
+    this.style.backgroundColor = 'black';
+    }
+}
+
 
 createScreen();
 createSlider();
+
+
 
 window.onmousedown = () => { checkMouseDown = 1; };
 window.onmouseup = () => { checkMouseDown = 0; };
@@ -29,6 +39,8 @@ document.querySelectorAll('.slider-peg').forEach((peg) => {
 
             clearScreen();
             createScreen();
+
+            allPixels.forEach((pixel) => pixel.addEventListener('mouseover', addColor));
 
         }
     });
@@ -56,6 +68,7 @@ function createScreen() {
         pixel.classList.add('pixel');
         pixel.setAttribute('style', `width:${pixelSize}px; height:${pixelSize}px;`);
         screen.appendChild(pixel);
+        allPixels = document.querySelectorAll('.pixel');
 
     }
 
@@ -73,12 +86,13 @@ function clearScreen() {
 
 }
 
+
+allPixels.forEach((pixel) => pixel.addEventListener('mouseover', addColor));
+
+
+
+
 /*
-
-let allPixels = document.querySelectorAll('.pixel');
-let checkState = 0;
-let addColor = function (e) { this.style.backgroundColor = 'black'; }
-
 window.addEventListener('mousedown', () => { checkState = 0; allPixels.forEach((pixel) => checkHover(pixel)) }, true);
 window.addEventListener('mouseup', () => { checkState = 1; allPixels.forEach((pixel) => checkHover(pixel)) }, true);
 
@@ -96,5 +110,4 @@ function checkHover(pixel) {
     }
 
 }
-
 */
