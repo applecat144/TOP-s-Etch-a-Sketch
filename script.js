@@ -7,7 +7,6 @@ let screen = document.querySelector('.screen')
 
 let screenSize = document.querySelector('.screen').offsetWidth;
 let allPixels = document.querySelectorAll('.pixel');
-let checkState = 0;
 let addColor = function (e) {
     if (checkMouseDown) {
         this.style.backgroundColor = 'black';
@@ -57,12 +56,15 @@ document.querySelectorAll('.slider-peg').forEach((peg) => {
                 document.querySelector(`.sliderview-peg.x${i}`).removeAttribute('style');
             }
 
+            document.querySelector(`.sliderview-peg.x${maxResolution}`).style.borderRadius="0 0 7.5px 7.5px";
+
             let cursor = document.createElement('div');
             cursor.classList.add('slider-cursor');
             document.querySelector(`.sliderview-peg.x${pegNumber}`).appendChild(cursor);
 
             pixelPerSide = pegNumber;
             screenSwapRequired = 1;
+            document.querySelector('.slider-footer').textContent=`${pixelPerSide}`
 
 
 
@@ -93,6 +95,9 @@ function createSlider() {
         document.querySelector('.slider-engine').appendChild(peg);
 
     }
+
+    document.querySelector(`.sliderview-peg.x${minResolution}`).style.borderRadius="7.5px 7.5px 0 0";
+    document.querySelector(`.sliderview-peg.x${maxResolution}`).style.borderRadius="0 0 7.5px 7.5px";
 }
 
 function createScreen() {
@@ -123,29 +128,3 @@ function clearScreen() {
     console.log("I did clear");
 
 }
-
-
-
-
-
-
-
-/*
-window.addEventListener('mousedown', () => { checkState = 0; allPixels.forEach((pixel) => checkHover(pixel)) }, true);
-window.addEventListener('mouseup', () => { checkState = 1; allPixels.forEach((pixel) => checkHover(pixel)) }, true);
-
-
-
-function checkHover(pixel) {
-
-
-    switch (checkState) {
-        case 0: pixel.addEventListener('mouseover', addColor);
-            break;
-
-        case 1: pixel.removeEventListener('mouseover', addColor);
-            break;
-    }
-
-}
-*/
