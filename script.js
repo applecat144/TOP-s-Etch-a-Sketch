@@ -3,13 +3,53 @@ let screen = document.querySelector('.screen')
     , maxResolution = 64
     , pixelPerSide = 16
     , checkMouseDown = 0
-    , screenSwapRequired = 0;
+    , screenSwapRequired = 0
+    , currentMode = "default";
 
 let screenSize = document.querySelector('.screen').offsetWidth;
 let allPixels = document.querySelectorAll('.pixel');
 let addColor = function (e) {
     if (checkMouseDown) {
-        this.style.backgroundColor = 'black';
+
+        let currentColor = document.querySelector('.color-selector').value;
+
+        switch (currentMode) {
+
+            case "grey":
+
+                if (!this.classList["1"]) {
+                    this.classList.add("greyed");
+                    this.style.opacity = 0.1;
+                }
+
+                this.style.backgroundColor = 'black';
+
+                if (this.style.opacity !== 1) {
+                    let opacity = this.style.opacity;
+                    opacity = +opacity;
+                    opacity += 0.1;
+
+                    this.style.opacity = opacity;
+                }
+
+                break;
+
+            case "rainbow":
+
+                let R = Math.floor(Math.random() * 256)
+                    , G = Math.floor(Math.random() * 256)
+                    , B = Math.floor(Math.random() * 256);
+
+                this.style.backgroundColor = `rgb(${R}, ${G}, ${B})`
+                    
+                break;
+
+            case "eraser": this.style.backgroundColor = '';
+                break;
+
+            default: this.style.backgroundColor = currentColor;
+        }
+
     }
 }
 
@@ -18,6 +58,15 @@ createScreen();
 createSlider();
 
 allPixels.forEach((pixel) => pixel.addEventListener('mouseover', addColor));
+document.querySelector('.erase').addEventListener('click', () => {
+    allPixels.forEach((pixel) => {
+        pixel.style.backgroundColor = '';
+    });
+})
+document.querySelector('.grey').addEventListener('click', () => { currentMode = "grey" });
+document.querySelector('.rainbow').addEventListener('click', () => { currentMode = "rainbow" });
+document.querySelector('.eraser').addEventListener('click', () => { currentMode = "eraser" });
+document.querySelector('.color-selector').addEventListener('click', () => { currentMode = "default" });
 
 window.onmousedown = () => { checkMouseDown = 1; };
 window.onmouseup = () => {
@@ -34,9 +83,9 @@ document.querySelectorAll('.slider-peg').forEach((peg) => {
 
             let pegNumber = "";
 
-            
+
             pegNumber = +e.target.classList["1"].substr(1);
-            
+
 
             for (i = minResolution; i <= maxResolution; i++) {
                 let currentPeg = document.querySelector(`.sliderview-peg.x${i}`);
@@ -56,7 +105,7 @@ document.querySelectorAll('.slider-peg').forEach((peg) => {
                 document.querySelector(`.sliderview-peg.x${i}`).removeAttribute('style');
             }
 
-            document.querySelector(`.sliderview-peg.x${maxResolution}`).style.borderRadius="0 0 7.5px 7.5px";
+            document.querySelector(`.sliderview-peg.x${maxResolution}`).style.borderRadius = "0 0 7.5px 7.5px";
 
             let cursor = document.createElement('div');
             cursor.classList.add('slider-cursor');
@@ -64,7 +113,7 @@ document.querySelectorAll('.slider-peg').forEach((peg) => {
 
             pixelPerSide = pegNumber;
             screenSwapRequired = 1;
-            document.querySelector('.slider-footer').textContent=`${pixelPerSide}`
+            document.querySelector('.slider-footer').textContent = `${pixelPerSide}`
 
 
 
@@ -96,8 +145,8 @@ function createSlider() {
 
     }
 
-    document.querySelector(`.sliderview-peg.x${minResolution}`).style.borderRadius="7.5px 7.5px 0 0";
-    document.querySelector(`.sliderview-peg.x${maxResolution}`).style.borderRadius="0 0 7.5px 7.5px";
+    document.querySelector(`.sliderview-peg.x${minResolution}`).style.borderRadius = "7.5px 7.5px 0 0";
+    document.querySelector(`.sliderview-peg.x${maxResolution}`).style.borderRadius = "0 0 7.5px 7.5px";
 }
 
 function createScreen() {
