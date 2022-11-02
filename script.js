@@ -105,7 +105,7 @@ document.querySelectorAll('.slider-peg').forEach((peg) => {
                 document.querySelector(`.sliderview-peg.x${i}`).removeAttribute('style');
             }
 
-            document.querySelector(`.sliderview-peg.x${maxResolution}`).style.borderRadius = "0 0 7.5px 7.5px";
+            document.querySelector(`.sliderview-peg.x${maxResolution}`).style.borderRadius = "7.5px 7.5px 0 0";
 
             let cursor = document.createElement('div');
             cursor.classList.add('slider-cursor');
@@ -124,7 +124,7 @@ document.querySelectorAll('.slider-peg').forEach((peg) => {
 
 function createSlider() {
 
-    for (i = minResolution; i <= maxResolution; i++) {
+    for (i = maxResolution; i >= minResolution; i--) {
         let peg = document.createElement('div');
         peg.classList.add('sliderview-peg');
         peg.classList.add(`x${i}`);
@@ -137,7 +137,7 @@ function createSlider() {
         }
     }
 
-    for (i = minResolution; i <= maxResolution; i++) {
+    for (i = maxResolution; i >= minResolution; i--) {
         let peg = document.createElement('div');
         peg.classList.add('slider-peg');
         peg.classList.add(`x${i}`);
@@ -145,8 +145,8 @@ function createSlider() {
 
     }
 
-    document.querySelector(`.sliderview-peg.x${minResolution}`).style.borderRadius = "7.5px 7.5px 0 0";
-    document.querySelector(`.sliderview-peg.x${maxResolution}`).style.borderRadius = "0 0 7.5px 7.5px";
+    document.querySelector(`.sliderview-peg.x${maxResolution}`).style.borderRadius = "7.5px 7.5px 0 0";
+    document.querySelector(`.sliderview-peg.x${minResolution}`).style.borderRadius = "0 0 7.5px 7.5px";
 }
 
 function createScreen() {
